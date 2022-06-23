@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const  {dbConnection} = require('./dababase/config');
+const sql = require('mssql');
 const hbs = require('hbs');
 require('./hbs/helpers');
 
@@ -24,8 +25,23 @@ app.get('/', (req, res) => {
 });
 
 app.get('/about', async(req, res) => {
-    await dbConnection;
-    res.render('about');
+    try {
+        const pool = (await dbConnection());
+        const result = await pool
+            .request()
+            .input('limite', sql.Int, this._idUser)
+            .input('desde', sql.Int, this._idUser)
+            .query('GET_SP_SELECT_User @idUser')
+
+        res.json({
+            result
+        });
+    } catch (err) {
+        res.json({
+            err
+        });
+    }
+
 });
 
 app.listen(port, () => {

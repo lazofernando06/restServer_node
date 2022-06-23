@@ -2,10 +2,10 @@ const sql = require('mssql');
 const production = true;
 const config = {
 
-    user: 'sa',
+    user: 'sqlserver',
     password: '123456',
     database: 'UserRecord',
-    server: 'localhost',
+    server: '35.224.234.43',
 
     options: {
         trustServerCertificate: true, // change to true for local dev / self-signed certs
