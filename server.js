@@ -15,8 +15,6 @@ hbs.registerPartials(__dirname + '/views/parciales');
 app.set('view engine', 'hbs');
 
 
-
-
 app.get('/', (req, res) => {
 
     res.render('home', {
@@ -26,7 +24,6 @@ app.get('/', (req, res) => {
 
 app.get('/elError', async (req, res) => {
 
-    try {
     const pool = (await dbConnection());
     const result = await pool
         .request()
@@ -36,10 +33,13 @@ app.get('/elError', async (req, res) => {
     res.json({
         result
     });
+/*
+    try {
+
     } catch (error) {
         res.sendFile(__dirname + '/public/404.html');
     }
-
+*/
 });
 
 app.listen(port, () => {
