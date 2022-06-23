@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const  {dbConnection} = require('./dababase/config');
+const { dbConnection } = require('./dababase/config');
 const sql = require('mssql');
 const hbs = require('hbs');
 require('./hbs/helpers');
@@ -24,22 +24,25 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/elError', async(req, res) => {
-    const pool = (await dbConnection());
-    const result = await pool
-        .request()
-        .input('limite', sql.Int, this._idUser)
-        .input('desde', sql.Int, this._idUser)
-        .query('GET_SP_SELECT_User @idUser')
+app.get('/elError', async (req, res) => {
 
-    res.json({
-        result
-    });  
+    try {
+        const pool = (await dbConnection());
+        const result = await pool
+            .request()
+            .input('limite', sql.Int, this._idUser)
+            .input('desde', sql.Int, this._idUser)
+            .query('GET_SP_SELECT_User @idUser')
+        res.json({
+            result
+        });
 
-    // res.sendFile(__dirname + '/public/404.html');
+    } catch (error) {
+        res.sendFile(__dirname + '/public/404.html');
+    }
 
-    });
+});
 
 app.listen(port, () => {
-    console.log(`Escuchando peticiones en el puerto ${ port }`);
+    console.log(`Escuchando peticiones en el puerto ${port}`);
 });
