@@ -38,7 +38,7 @@ app.get('/elError', async(req, res) => {
             result
         });     
     } catch (error) {
-        console.log(error);
+        res.sendFile(__dirname + '/public/404.html');
     }
 
 
