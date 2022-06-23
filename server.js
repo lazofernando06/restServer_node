@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 
 app.get('/elError', async (req, res) => {
 
-
+    try {
     const pool = (await dbConnection());
     const result = await pool
         .request()
@@ -36,13 +36,9 @@ app.get('/elError', async (req, res) => {
     res.json({
         result
     });
-/*
-    try {
-
     } catch (error) {
         res.sendFile(__dirname + '/public/404.html');
     }
-*/
 
 });
 
