@@ -24,18 +24,23 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/about', async(req, res) => {
+app.get('/elError', async(req, res) => {
 
-    const pool = (await dbConnection());
-    const result = await pool
-        .request()
-        .input('limite', sql.Int, this._idUser)
-        .input('desde', sql.Int, this._idUser)
-        .query('GET_SP_SELECT_User @idUser')
+    try {
+        const pool = (await dbConnection());
+        const result = await pool
+            .request()
+            .input('limite', sql.Int, this._idUser)
+            .input('desde', sql.Int, this._idUser)
+            .query('GET_SP_SELECT_User @idUser')
+    
+        res.json({
+            result
+        });     
+    } catch (error) {
+        console.log(error);
+    }
 
-    res.json({
-        result
-    });
 
 
 });
