@@ -25,25 +25,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/elError', async(req, res) => {
+    const pool = (await dbConnection());
+    const result = await pool
+        .request()
+        .input('limite', sql.Int, this._idUser)
+        .input('desde', sql.Int, this._idUser)
+        .query('GET_SP_SELECT_User @idUser')
 
-    try {
-        const pool = (await dbConnection());
-        const result = await pool
-            .request()
-            .input('limite', sql.Int, this._idUser)
-            .input('desde', sql.Int, this._idUser)
-            .query('GET_SP_SELECT_User @idUser')
-    
-        res.json({
-            result
-        });     
-    } catch (error) {
-        res.sendFile(__dirname + '/public/404.html');
-    }
+    res.json({
+        result
+    });  
 
+    // res.sendFile(__dirname + '/public/404.html');
 
-
-});
+    });
 
 app.listen(port, () => {
     console.log(`Escuchando peticiones en el puerto ${ port }`);
