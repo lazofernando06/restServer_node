@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-
+const  {dbConnection} = require('./dababase/config');
 const hbs = require('hbs');
 require('./hbs/helpers');
 
@@ -23,8 +23,8 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/about', (req, res) => {
-
+app.get('/about', async(req, res) => {
+    await dbConnection;
     res.render('about');
 });
 
